@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { APIProvider, Map, AdvancedMarker } from '@vis.gl/react-google-maps'
+import { APIProvider, Map, AdvancedMarker, Marker } from '@vis.gl/react-google-maps'
 import axios from "axios";
 
 
@@ -90,11 +90,13 @@ export default class MapView extends Component {
             
             satelite01.lng = response[0].name === "SL-1 R/B" ? parseFloat(response[0].longitude) : parseFloat(response[1].longitude)
             satelite02.lng = response[1].name === "UNID" ? parseFloat(response[1].longitude) : parseFloat(response[0].longitude)
-            
-            sateliteCenter.lat = (satelite01.lat + satelite02.lat) / 2;
-            sateliteCenter.lng = (satelite01.lng + satelite02.lng) / 2; 
+            // if(this.state.seconds === 2){
+                sateliteCenter.lat = (satelite01.lat + satelite02.lat) / 2;
+                sateliteCenter.lng = (satelite01.lng + satelite02.lng) / 2; 
+            // }
             console.log(satelite01)
             console.log(satelite02)
+            console.log(sateliteCenter)
             console.log(satelite01Name, satelite02Name)
             
             this.setState({
@@ -111,7 +113,7 @@ export default class MapView extends Component {
     tick() {
         // if (this.props.biltyStatusId === 8 || this.props.biltyStatusId === 9 || this.props.biltyStatusId === 10) {
         //     }
-        // this.getLiveLocation()
+        this.getLiveLocation();
         this.setState(state => ({
             seconds: state.seconds + 1
         }));
@@ -123,23 +125,20 @@ export default class MapView extends Component {
 
     async componentDidMount() {
         this.interval = setInterval(() => this.tick(), 1000);
-        this.getLiveLocation();
+        // this.getLiveLocation();
     }
     render() {
         return (
             <APIProvider apiKey={'AIzaSyBG4WuTT6-8Ssb-aPdpFH8sbqKWnMIt7uo'}>
                 <Map
                     style={{ width: '99vw', height: '80vh' }}
-                    // defaultCenter={{lat: 22.54992, lng: 0}}
-                    defaultCenter={this.state.sateliteCenter}
-                    defaultZoom={5}
+                    // defaultCenter={{lat: -36.59, lng: 138.12}}
+                    center={this.state.sateliteCenter}
+                    defaultZoom={8}
                     gestureHandling={'greedy'}
-                    zoomControl={false}
-                    disableDefaultUI={true}
-                    mapId={"DEMO_MAP_ID"}>
-                    <AdvancedMarker title={this.state.satelite01Name} position={this.state.satelite01} />
-                    <AdvancedMarker title={this.state.satelite02Name} position={this.state.satelite02} />
-                    {/* <AdvancedMarker title={"Karachi"} position={this.state.positionKarachi} /> */}
+                    disableDefaultUI={true}>
+                    <Marker title={this.state.satelite01Name} position={this.state.satelite01} />
+                    <Marker title={this.state.satelite02Name} position={this.state.satelite02} />
                     {/* <Marker title={"Lahore"} position={this.state.positionLahore}/> */}
                     {/* <AdvancedMarker title={"Lahore"} position={this.state.positionLahore} /> */}
                     {/* <Marker title={"Islamabd"} position={this.state.positionIslamabd}/> */}
