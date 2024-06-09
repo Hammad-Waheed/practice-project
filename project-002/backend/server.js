@@ -16,9 +16,13 @@ mongoose.connect(uri)
 
 app.get('/api/latest-data', async (req, res) => {
   try {
-    const satellites = await Satellite.find({})
+    const satellites1 = await Satellite.find({name:'UNID'})
     .sort({ _id: -1 }) // Sort by _id in descending order
-     .limit(2);         // Limit the result to the last 2 documents
+     .limit(1);         // Limit the result to the last 2 documents
+     const satellites2 = await Satellite.find({name:'SL-1 R/B'})
+    .sort({ _id: -1 }) // Sort by _id in descending order
+     .limit(1);         // Limit the result to the last 2 documents
+     const satellites = [satellites1[0],satellites2[0]]
     console.log(satellites);
     res.json(satellites);
   } catch (err) {
