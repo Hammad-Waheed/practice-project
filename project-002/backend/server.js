@@ -3,9 +3,12 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const Satellite = require('./models/Satellite');
+const cors = require('cors'); // Import the cors package
 
 const app = express();
-const port = 3000;
+const port = 3001;
+// Enable CORS for all routes
+app.use(cors());
 
 // Replace the following with your MongoDB connection string
 const uri = process.env.MONGODB_URI
