@@ -3,41 +3,12 @@ import { APIProvider, Map, AdvancedMarker, Marker } from '@vis.gl/react-google-m
 import axios from "axios";
 import './mapView.css'
 
-var color = "#FF0000";
 
 
-const onLoad = polyline => {
-    console.log('polyline: ', polyline)
-};
-const markerOpt = {
-    icon: './assets/pin.png',
-};
-const options = {
-    strokeColor: '#1b53ab',
-    strokeOpacity: 1.0,
-    strokeWeight: 3,
-    fillColor: '#1b53ab',
-    fillOpacity: 0.35,
-    clickable: false,
-    draggable: false,
-    editable: false,
-    visible: true,
-    radius: 30000,
-    zIndex: 1
-};
 export default class MapView extends Component {
     constructor() {
         super();
         this.state = {
-
-            position: { lat: 47.7, lng: -38.6 },
-            //00000 UNID
-            positionKarachi: { lat: 47.7, lng: -38.6 },
-            //00001 SL-1 R/B
-            positionLahore: { lat: 50.24, lng: -28.04 },
-            //00100 Discover 23 Stopped
-            // 10000 
-            positionIslamabd: { lat: -0.11, lng: 26.15 },
 
             satelite01: { lat: 0, lng: 0 },
             satelite01Name: '',
@@ -74,16 +45,16 @@ export default class MapView extends Component {
             console.log(response)
             satelite01Name = response[0].name;
             satelite02Name = response[1].name;
-            // satelite03Name = response[2].name;
+            satelite03Name = response[2].name;
 
             satelite01.lat = parseFloat(response[0].latitude);
             satelite02.lat = parseFloat(response[1].latitude);
-            // satelite03.lat = parseFloat(response[2].latitude);
+            satelite03.lat = parseFloat(response[2].latitude);
 
 
             satelite01.lng = parseFloat(response[0].longitude);
             satelite02.lng = parseFloat(response[1].longitude);
-            // satelite03.lng = parseFloat(response[2].longitude);
+            satelite03.lng = parseFloat(response[2].longitude);
             // satelite01Name = response[0].name === "SL-1 R/B" ? response[0].name : response[1].name
             // satelite02Name = response[1].name === "UNID" ? response[1].name : response[0].name
 
@@ -135,11 +106,7 @@ export default class MapView extends Component {
         let sateliteDefaultCenter = this.state.sateliteDefaultCenter;
         sateliteDefaultCenter.lat = -36.42;
         sateliteDefaultCenter.lng = 53.32;
-        this.setState({ sateliteDefaultCenter: sateliteDefaultCenter })
-        console.log("Tester ");
-    }
-    onCenterChanged = () => {
-        console.log("Tester111 ");
+        this.setState({ sateliteDefaultCenter: sateliteDefaultCenter });
     }
     render() {
         return (
@@ -154,8 +121,8 @@ export default class MapView extends Component {
                     </thead>
                     <tbody>
                         <tr>
-                            {/* <td>{this.state.satelite01Name}</td> */}
-                            <td><a onClick={this.Click01Satelite}> asdsad </a></td>
+                            <td>{this.state.satelite01Name}</td>
+                            {/* <td><a onClick={this.Click01Satelite}> asdsad </a></td> */}
                             <td>{this.state.satelite01.lat}</td>
                             <td>{this.state.satelite01.lng}</td>
                         </tr>
@@ -182,6 +149,7 @@ export default class MapView extends Component {
                         disableDefaultUI={true}>
                         <Marker title={this.state.satelite01Name} position={this.state.satelite01} />
                         <Marker title={this.state.satelite02Name} position={this.state.satelite02} />
+                        <Marker title={this.state.satelite03Name} position={this.state.satelite03} />
                         {/* <Marker title={"Lahore"} position={this.state.positionLahore}/> */}
                         {/* <AdvancedMarker title={"Lahore"} position={this.state.positionLahore} /> */}
                         {/* <Marker title={"Islamabd"} position={this.state.positionIslamabd}/> */}
