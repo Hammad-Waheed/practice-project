@@ -17,7 +17,7 @@ function App() {
   };
   return (
     <>
-      <h1 style={{textAlign:'center'}}>Satilite Data</h1>
+      <h1 style={{textAlign:'center'}}>Satellite Data</h1>
       <div>
         <MapView />
       </div>
