@@ -55,21 +55,3 @@ app.get('/api/latest-data', async (req, res) => {
 app.listen(port,'0.0.0.0', () => {
   console.log(`Server running at http://localhost:${port}/`);
 });
-
-async function getLastThreeObjects(listName) {
-  try {
-    // Fetch the last three elements from the list
-    const lastThreeData = await client.lRange(listName, -3, -1);
-    
-    if (lastThreeData && lastThreeData.length > 0) {
-      const parsedObjects = lastThreeData.map(item => JSON.parse(item));
-      console.log('Last Three Objects:', parsedObjects);
-      return parsedObjects;
-    } else {
-      console.log('No objects found in the list.');
-      return [];
-    }
-  } catch (error) {
-    console.error('Error fetching last three objects:', error);
-  }
-}
